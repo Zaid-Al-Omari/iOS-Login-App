@@ -10,6 +10,10 @@ import UIKit
 
 class LoginViewController: UIViewController {
 
+    @IBOutlet weak var userId: UITextField!
+    @IBOutlet weak var password: UITextField!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -21,6 +25,20 @@ class LoginViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func login(sender: AnyObject){
+        let login:LoginModel = LoginModel()
+        let result:Bool = login.verifyUserandPassword(userId.text!, password: password.text!)
+        if(!result){
+            printMessage("Incorrect Username or Password")
+        }
+    }
+    
+    func printMessage(name:String) {
+        let alertPopUp:UIAlertController = UIAlertController(title: "Alert", message: name, preferredStyle: UIAlertControllerStyle.Alert)
+        let cancelAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Cancel){action -> Void in}
+        alertPopUp.addAction(cancelAction)
+        self.presentViewController(alertPopUp, animated: true, completion: nil)
+    }
 
     /*
     // MARK: - Navigation
