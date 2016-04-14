@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController , UITextFieldDelegate{
 
     @IBOutlet weak var userId: UITextField!
     @IBOutlet weak var password: UITextField!
@@ -18,6 +18,8 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        userId.delegate = self;
+        password.delegate = self;
     }
 
     override func didReceiveMemoryWarning() {
@@ -25,11 +27,22 @@ class LoginViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        userId.resignFirstResponder()
+        password.resignFirstResponder()
+        return true;
+    }
+    
     @IBAction func login(sender: AnyObject){
+        userId.resignFirstResponder()
+        password.resignFirstResponder()
+        
         let login:LoginModel = LoginModel()
         let result:Bool = login.verifyUserandPassword(userId.text!, password: password.text!)
         if(!result){
             printMessage("Incorrect Username or Password")
+        }else{
+            printMessage("Welcome to the application")
         }
     }
     
